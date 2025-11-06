@@ -204,7 +204,7 @@ int gcd(int a,int b){
         return a;
     }
     return gcd(b,a%b);//欧几里得算法，辗转相除法，递归版
-}
+}//以上参数顺序不可以调换！
 ```
 
 最小公倍数函数（lcm）：
@@ -257,9 +257,59 @@ for(int i = 0;i<n-1;i++){//n个元素交换n-1次，这次寻找第i小的元素
 
 
 
+---
 
 
 
+### <mark>哈希表键值对</mark>
+
+一.语法：
+
+`unordered_map<键类型，值类型> 变量名;`
+
+eg:
+
+```c++
+//基本初始化
+unordered_map<int,string> student_id;// 学号→姓名
+unordered_map<string,double> product_price;//产品名→价格
+unordered_map<ll,ll> freq;// 数值→出现次数
+//插入键值对
+scores["Alice"] = 100;//Alice为键，100为其对应的值
+scores.insert({"Bob",60});//插入一个键值对
+//访问元素
+cout<<scores["Alice"];//输出的是100
+cout<<scores["David"];//自动创建{"David":0}并输出0
+```
+
+```c++
+//高级函数
+if(scores.count("Alice")){
+    //键存在
+}
+scores.erase("Alice");//删除键为Alice的元素
+```
+
+二.特性：
+
+1.无序性。
+
+相对map来说，map是有序的键值对，但访问速度没有哈希表快速。元素的存储顺序与插入顺序无关，遍历时顺序也不确定。
+
+2.自动初始化。
+
+eg：
+
+```c++
+unordered_map<int,int> m;
+cout<<m[5];//输出0,同时自动创建{5:0}
+```
+
+即，即使哈希表的一些键值对还没有被初始化时，此时若直接输出或者访问某个键，会自动创建键值对，并初始化键的值为0。
+
+三.用法：
+
+1.统计频率等
 
 ---
 
@@ -601,6 +651,30 @@ getline(cin,text);
 
 
 ---
+
+### <mark>map容器（c++）</mark>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
+
 
 ### <mark>pair(c++模板类)</mark>
 
