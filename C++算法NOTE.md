@@ -64,7 +64,7 @@ Runtime Error：
 ```c++
 int a[n];//先定义一个大小乱序的数组
 //这里省略数组初始化...
-long long presum[n] = {0};//初始化前缀和先都为0
+long long presum[n+1] = {0};//初始化前缀和先都为0,大小为n+1防止越界(一定要开足空间！！)
 for(int i = 1;i<=n;i++){//i从1开始，更符合人类习惯，"前i个的和..."
     presum[i] = a[i-1]+presum[i-1];//第i个元素+前i-1个
 }
@@ -310,6 +310,32 @@ cout<<m[5];//输出0,同时自动创建{5:0}
 三.用法：
 
 1.统计频率等
+
+### <mark>两两乘积之和化简</mark>
+
+eg:一个数组a[n];计算数组中所有不同的两个元素的乘积之和（前后顺序相反的算同一组）
+
+即a1​⋅a2​+a1​⋅a3​+⋯+a1​⋅an​+a2​⋅a3​+⋯+a(n−2)​⋅a(n−1)​+a(n−2)​⋅an​+a(n−1)​⋅an
+
+算法思维：
+
+​![乘积化简](./images/屏幕截图%202025-11-07%20231654.png)
+
+具体代码：
+
+```c++
+ll a[n];//ll 表示long long
+ll total_sum = 0;
+ll square_sum = 0;
+for(ll i = 0;i<n;i++){
+    cin>>a[i];
+    total_sum = total_sum+a[i];
+    square_sum = square_sum+a[i]*a[i];
+}
+ll sum = (total_sum*total_sum-square_sum)/2;
+```
+
+
 
 ---
 
