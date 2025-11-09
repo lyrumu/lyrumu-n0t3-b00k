@@ -1,4 +1,4 @@
-# C++/C&算法NOTE
+# C++/C算法n0t3
 
 ---
 
@@ -255,6 +255,42 @@ for(int i = 0;i<n-1;i++){//n个元素交换n-1次，这次寻找第i小的元素
 
 
 
+---
+
+
+
+### <mark>差分</mark>
+
+差分可以先理解为`前缀和`的`逆过程`
+
+- 前缀和：给定数组`a`,需我们创建数组`presum`
+  其中`presum[i]=a[1]+a[2]+..+a[i]`,用于计算区间和
+
+- 差分：
+  将给定的数组`a`视为一个`presum`,创建一个数组`b`
+  
+  使得`a[i]=b[1]+b[2]+..+b[i]`,数组b就是a的差分
+
+定义差分数组：
+
+`chafen[i] = a[i]-a[i-1]`
+
+应用：
+
+`将对一个数组区间修改的操作，转化为对其差分数组两个单点的修改操作`
+
+eg：
+
+需要对数组`a`的区间`[l.r]`上的每一个元素都加上`c`
+
+```c++
+//进行两个单点操作即可
+chafen[l] = chafen[l]+c;
+chafen[r+1] = chafen[r+1]-c;
+```
+
+注意，修改后要对差分数组求一次前缀和，进行还原，作为新的修改后的数组`a`
+
 
 
 ---
@@ -310,6 +346,10 @@ cout<<m[5];//输出0,同时自动创建{5:0}
 三.用法：
 
 1.统计频率等
+
+---
+
+
 
 ### <mark>两两乘积之和化简</mark>
 
@@ -424,6 +464,26 @@ ios::sync_with_stdio(false);
 cin.tie(0);
 cout.tie(0);
 ```
+
+---
+
+
+
+### <mark>类型转换</mark>
+
+首先方便起见，初学使用`using namespace std;`
+
+```c++
+//字符串-->数值
+string str = "123";
+int num1 = stoi(str);
+double num2 = stod(str);
+float num3 = stof(str);
+//数值-->字符串
+string str1 = to_string(num1);
+```
+
+
 
 ---
 
@@ -552,7 +612,7 @@ bool cmp1(int a,int b){
 
 ---
 
-### <mark>swap（交换函数）</mark>
+### <mark>swap(交换函数)</mark>
 
 基本语法&示例：
 
@@ -678,7 +738,7 @@ getline(cin,text);
 
 ---
 
-### <mark>map容器（c++）</mark>
+### <mark>map容器(c++)</mark>
 
 
 
@@ -738,7 +798,7 @@ vector<pair<int,int>> biggest(m,{0,0});//表示有m个{0，0}对序列
 
 ---
 
-### <mark>字符串需主动添加'\0'（NULL）的情况</mark>
+### <mark>字符串需主动添加'\0'(NULL)的情况</mark>
 
 (1)使用<u>循环对逐个字符赋值</u>，构造字符串时：
 
