@@ -268,7 +268,6 @@ for(int i = 0;i<n-1;i++){//n个元素交换n-1次，这次寻找第i小的元素
 
 - 差分：
   将给定的数组`a`视为一个`presum`,创建一个数组`b`
-  
   使得`a[i]=b[1]+b[2]+..+b[i]`,数组b就是a的差分
 
 定义差分数组：
@@ -290,6 +289,54 @@ chafen[r+1] = chafen[r+1]-c;
 ```
 
 注意，修改后要对差分数组求一次前缀和，进行还原，作为新的修改后的数组`a`
+
+---
+
+
+
+### <mark>二维数组差分</mark>
+
+以例题形式展示：
+
+![二维数组差分例题](./images/屏幕截图%202025-11-09%20215629.png)
+
+解法：
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    //int gezi[n+5][n+5] = {0};//这个只会把第一行第一列初始化为0！！！
+    vector<vector<int>> gezi(n+5,vector<int>(n+5,0));
+    for(int i = 0;i<m;i++){//直接将gezi数组视为其自身的差分数组，进行处理
+        int x1,y1,x2,y2;
+        cin>>x1>>y1>>x2>>y2;
+        gezi[x1][y1]++;//***
+        gezi[x1][y2+1]--;//***
+        gezi[x2+1][y1]--;//***
+        gezi[x2+1][y2+1]++;//二维差分的处理
+    }
+    vector<vector<int>> presum(n+5,vector<int>(n+5,0));//进行还原，计算差分数组的前缀和
+    for(int i = 1;i<=n;i++){
+        for(int j = 1;j<=n;j++){
+            presum[i][j] = gezi[i][j]+presum[i-1][j]+presum[i][j-1]-presum[i-1][j-1];
+        }
+    }
+    for(int i = 1;i<=n;i++){
+        for(int j = 1;j<=n;j++){
+            cout<<presum[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+```
+
+细节注意二维数组的初始化哦~
+
+由于gezi数组初始化全为0，因此不必定义创建差分数组，其本身就可以视为其自身的差分数组
 
 
 
@@ -828,3 +875,33 @@ str[5] = '\0';  // 必须手动添加****
 ```
 
 ---
+
+### <mark>二维数组的初始化</mark>
+
+目标：初始化`a[n][n]`的每个元素都为0
+
+错误示例：
+
+```c++
+int a[n][n] = {0};//这样只会让第一行第一列为0
+```
+
+正确示例：
+
+```c++
+int a[n][n];
+for(int i = 0;i<n;i++){
+    for(int j = 0;j<n;j++){
+        a[i][j] = 0;    
+    }
+}
+```
+
+```c++
+//或者使用vector
+vector<vector<int>> a(n,vector<int>(n,0));
+```
+
+---
+
+
