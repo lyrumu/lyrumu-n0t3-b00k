@@ -172,6 +172,16 @@ for(int r1 = 1;r1<=n;r1++){
 }
 ```
 
+```c++
+//若子矩阵是边长为len的正方形
+//以(i,j)坐标为子矩阵右下角
+for(int i = len;i<n;i++){
+    for(int j = len;j<n;j++){
+        int sum = presum[i][j]-presum[i-len][j]-presum[i][j-len]+presum[i-len][j-len];
+    }
+}
+```
+
 题目（二）：
 
 ---
@@ -422,6 +432,14 @@ for(ll i = 0;i<n;i++){
 ll sum = (total_sum*total_sum-square_sum)/2;
 ```
 
+---
+
+### <mark>快速幂</mark>
+
+
+
+
+
 
 
 ---
@@ -430,7 +448,7 @@ ll sum = (total_sum*total_sum-square_sum)/2;
 
 ---
 
-### <mark>结构体struct</mark>
+### <mark>struct结构体</mark>
 
 是一种`自定义数据类型`
 
@@ -471,6 +489,40 @@ Student a = {Xiaoming,18,100.0};
 ```c++
 Student a = {.name = Xiaoming,.age = 18,.score = 100.0};
 ```
+
+---
+
+### <mark>set容器(c++)</mark>
+
+介绍：
+
+`set`是一个有序的关联容器，包含`唯一键`(元素不允许重复)的集合
+
+特性：
+
+元素唯一性；自动排序(升序)；不可修改元素(均为const)；查找效率高(logn)
+
+用法：
+
+```c++
+set<变量类型> 变量名；
+//eg:
+set<int> myset;
+myset.insert(1);
+myset.insert(2);
+myset.insert(3);
+myset.insert(1);//因为1已经有了，这个1就无效了
+//可用于统计集合的实际元素个数！！
+int len = myset.size();
+```
+
+```c++
+//利用其自动升序排序的原理，我们可以用set同时完成去重和排序！！！
+set<type> setname(iterator first,iterator last);
+//这个构造函数会遍历[first,last)的所有元素并插入到set中
+```
+
+
 
 ---
 
@@ -821,21 +873,18 @@ pair<类型1，类型2> 变量名；
 用法：
 
 ```c++
-// 方式1：先声明后赋值
+//方式1:先声明后赋值
 pair<string,int> p1;
 p1.first = "Bob";//这里first，second是pair专用的访问元素方法
 p1.second = 80;
-
-// 方式2：声明时直接初始化
+// 方式2:声明时直接初始化
 pair<string,int> p2("Cathy", 88);
-
-//方式3：表达一系列pair对，例如n个学生的姓名以及对应成绩
+//方式3:表达一系列pair对，例如n个学生的姓名以及对应成绩
 vector<pair<string,int>> student(n);
 for(int i = 0;i<n;i++){
     cin>>student[i].first>>student[i].second;//对其进行输入
 }
-
-//方式4：初始化pair序列
+//方式4:初始化pair序列
 vector<pair<int,int>> biggest(m,{0,0});//表示有m个{0，0}对序列
 ```
 
@@ -903,5 +952,3 @@ vector<vector<int>> a(n,vector<int>(n,0));
 ```
 
 ---
-
-
