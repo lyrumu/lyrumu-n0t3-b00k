@@ -153,6 +153,56 @@ int main(){
 
 ---
 
+### <mark>Kadane最大子数组和</mark>
+
+属于一种`动态规划`算法
+
+```c++
+int a[n];
+for(int i = 0;i<n;i++){
+    cin>>a[i];//初始化数组（包含负数）
+}
+int max_endhere = a[0];
+int max_sum = a[0];
+for(int i = 1;i<n;i++){
+    max_endhere = max(a[i],max_endhere+a[i]);//精髓
+    //即，如果当前值a[i]比前面局部最大值加上当前值还要大
+    //则直接从当前值重新开始计算
+    max_sum = max(max_sum,max_endhere);
+}
+cout<<max_sum;
+```
+
+对于每个位置i，需要决定是继续扩展前面的子数组；
+
+还是从这里重新开始一个新的子数组！
+
+`max_endhere`表示以元素`a[i]`结尾的子串中的最大字串和
+
+
+
+---
+
+### <mark>LIS相关问题</mark>
+
+(LIS指longest increasing subsequencec,即最大上升子序列)
+
+一.
+
+
+
+
+
+
+
+
+
+
+
+
+
+---
+
 ### <mark> 二维前缀和</mark>
 
 1.定义二维前缀和
@@ -501,9 +551,32 @@ ll sum = (total_sum*total_sum-square_sum)/2;
 
 ### <mark>快速幂</mark>
 
+用来计算类似`3^100000000000`这种东西
 
+把`3*3*3*3*3.....*3`转变成`9*9*9*9..9`.....
 
+总之就是把乘法任务两两打包，指数级减少操作次数
 
+`核心思想`：
+
+能把底数价值翻倍打包就一直先打包（来降低指数次数）
+
+直到指数变为奇数，就将翻倍后的新底数乘上result
+
+```c++
+long long fastpower(long long base,long long exponent){
+    //base,exponent分别表示底数和指数
+    long long result = 1;
+    while(exponent>0){
+        if(exponent%2==1){//不能再直接打包了
+            result *= base;//若指数是奇数就先单独乘上一个底数
+        }
+        base = base*base;//把底数两两打包,能打包就一直打包
+        exponent = exponent/2;//因此指数也要减半
+    }
+    return result;
+}
+```
 
 
 
@@ -655,7 +728,13 @@ float num3 = stof(str);
 string str1 = to_string(num1);
 ```
 
-注意`stoi()`这种的参数需要是`字符串`,不能直接使用单个字符哦.
+注意`stoi()`这种的参数需要是`字符串`,不能直接转换单个字符哦.
+
+对于单个字符的情况：
+
+```c++
+int num = str.back()-'0';//也能完成对最后一个元素的转换
+```
 
 
 
@@ -883,6 +962,17 @@ str.replace(起始索引，需替换长度，"新内容")；//新字符串长度
 str.reserve(n)//不改变字符串大小，只分配内存容量
 str.resize(n)//分配空间的同时也改变字符串大小
 ```
+
+注意：
+`.end()`和`.begin()`是一对：
+
+表示指向最后一个元素的下一个位置，和指向第一个元素
+
+`.front()`和`.back()`是一对：
+
+表示第一个和最后一个元素，可直接引用
+
+
 
 ---
 
