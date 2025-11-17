@@ -187,17 +187,142 @@ cout<<max_sum;
 
 (LIS指longest increasing subsequencec,即最大上升子序列)
 
-一.
+一.`最大上升子序列`
+
+```c++
+int a[n];//初始化完一个随意的数字序列
+int lis[n];//表示以第i个元素作为LIS最后一个元素时，的最长序列长度
+int max_lis = 1;//全局最长LIS
+for(int i = 0;i<n;i++){
+    lis[i] = 1;//长度至少为1
+    for(int j = 0;j<i;j++){//每一个i，在i前逐一寻找
+        if(a[j]<a[i]){//指如果满足升序
+            lis[i] = max(lis[i],lis[j]+1);
+        }
+    }
+    max_lis = max(max_lis,lis[i]);
+}
+cout<<max_lis<<endl;
+```
+
+二.`合唱队型（先升序后降序）`
+
+![合唱队型](./images/屏幕截图%202025-11-17%20162454.png)
+
+策略是：单独求最大升序列和最大降序列
+
+```c++
+int tall[n];//初始化n个同学身高
+//最大升序
+int lis[n];
+for(int i = 0;i<n;i++){
+    lis[i] = 1;
+    for(int j = 0;j<i;j++){
+        if(tall[j]<tall[i]){
+            lis[i] = max(lis[i],lis[j]+1);
+        }
+    }
+}
+//最大降序
+int lds[n];//表示第i个作为LDS最前面的元素时，的最大降序列
+for(int i = n-1;i>=0;i--){
+    lds[i] = 1;
+    for(int j = n-1;j>i;j--){
+        if(tall[j]<tall[i]){
+            lds[i] = max(lds[i],lds[j]+1);
+        }
+    }
+}
+//寻找最合适的“峰值”，LIS和LDS可以以此首位相接哦
+int max_len = 2;
+for(int i = 0;i<n;i++){//遍历所有可能的峰值
+    max_len = max(max_len,lis[i]+lds[i]-1);
+}
+cout<<n-max_len<<endl;//输出最少要抽出的人数
+```
+
+三.`Dliworth theory：`
+
+`任意有限偏序集，最大反链的长度==最小正链划分数目`
+
+eg：一个随机序列a。最大升序子序列的长度，就等于下面问题的答案哦----->
+
+将全部元素划分为若干个降序列，最少需要划分为多少个？？
 
 
 
+---
+
+### <mark>二分法查找</mark>
+
+复杂度：nlog(n)?
+
+- 标准二分：用于查找`有序`序列中的某个target，（是一次查询）
+
+```c++
+vector<int> arr;
+int left = 0;int right = arr.size();
+while(left<=right){
+    int mid = (left+right)/2;
+    if(arr[mid==target)return mid;//找到就返回位置
+    if(arr[mid]<target){
+        left = mid+1;//目标在右边就向右移动左边界
+    }else{
+        right = mid-1;//反之向左移动右边界
+    }
+}
+return -1;//没找到就返回-1
+```
 
 
 
+- 与导弹例题结合，直接上例题：（对每个导弹多次查询）
 
+![导弹拦截](./images/屏幕截图%202025-11-17%20210510.png)
 
+- 由于题目的导弹数量n可能到达1e5，需要用`二分法：`
 
+        首先求最长不上升子序列：
 
+```c++
+int heights[n];//初始化所有导弹的高度；
+vector<int> tail1;
+//tail1[i]表示长度为i+1的不上升子序列的最后一个元素的最大值！
+//因为若想让整个不上升子序列最长，末尾的元素要尽可能大，这样才可能在后面排更多元素
+//由tail1的定义可知，tail1本身是严格降序的
+for(int i = 0;i<n;i++){//对于heights中的每个元素
+    int left = 0;
+    int right = tail1.size();
+    while(left<right){
+        int mid = (left+right)/2;//在tail1中寻找第一个小于heights[i]的元素
+        if(tail1[mid]<heights[i]){
+            //如果找到，那么再往tail1的左边再看看有没有更大的元素小于heights[i]，因为我们需要找的是第一个小于heights[i]的
+            right = mid;
+        }else{
+            //如果没找到，往tail1右边更小的地方找
+            left = mid+1;
+        }
+    }
+    if(left==tail1.size()){//左边界到tail1最小值都仍没找到比heights[i]更小的
+        tail1.push_back(heights[i]);//直接附加在后面
+    }else{//若找到tail1中第一个比heights[i]小的元素
+        tail[left] = heights[i];//为了得到最长不上升子序列，让tail1中每一个元素更大！
+    }
+}
+int max_lis = tail1.size();//得到最长不上升子序列
+```
+
+- 总结一下上面：
+
+        就是遍历heights的所有元素，根据条件，要么直接夹在tail1后面来延长序列，要么替换掉tail1中的元素使其能够在之后延申得更长.
+
+tail1最后的size就是所求序列的长度
+
+- 再依据`Dliworth theory`算最长上升子序列
+
+```c++
+//把tail[mid]<heights[i]改成tail[mid]>=heights[i]即可
+```
 
 
 
@@ -705,7 +830,7 @@ cout.tie(0);
 4.输出小数
 
 ```c++
-cout<<fixed<<setprecision(n)<<double_num<<ednl;//保留n位小数
+cout<<fixed<<setprecision(n)<<double_num<<endl;//保留n位小数
 ```
 
 
