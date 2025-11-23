@@ -308,7 +308,7 @@ vector<int> arr;
 int left = 0;int right = arr.size();
 while(left<=right){
     int mid = (left+right)/2;
-    if(arr[mid==target)return mid;//找到就返回位置
+    if(arr[mid]==target)return mid;//找到就返回位置
     if(arr[mid]<target){
         left = mid+1;//目标在右边就向右移动左边界
     }else{
