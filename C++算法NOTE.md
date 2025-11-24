@@ -280,7 +280,7 @@ for(int i = 0;i<=lena;i++){
 for(int i = 1;i<=lena;i++){
     for(int j = 1;j<=lenb;j++){//遍历所有子情况
         if(a[i-1]==b[j-1]){//若两个字符串尾部相同
-            dp[i][j] = dp[i-1][j-1];
+            dp[i][j] = dp[i-1][j-1];//当前编辑距离就等于前一次的了哦（即分别去掉两个串相同的那个字符）
         }else{
             dp[i][j] = min(min(dp[i-1][j]+1,dp[i][j-1]+1),dp[i-1][j-1]+1);//在插入，替换，删除三种操作中取最小的
         }
@@ -833,6 +833,31 @@ set<type> setname(iterator first,iterator last);
 
 ---
 
+### <mark>fill,memset函数</mark>
+
+```c++
+fill(起始迭代器，结束迭代器，填充值)；
+```
+
+即不管序列原来每个元素的值是多少，`fill函数`能够将范围内的所有元素值都一律变为`填充值`.
+
+```c++
+fill(arr.begin(),arr.end(),10);//将arr全部变为10
+```
+
+`memset`主要用于**快速清空**或**初始化**很大的内存空间，很高效的.
+
+```c++
+memmset(需要填充的内存块的指针,int ch,要设置的字节数);
+memset(arr,0,sizeof(arr));//数值全变为0
+memset(str,0,sizeof(str));//字符串全变为空!!!
+memset(str,'a',sizeof(str));//字符串全变为字符a
+memset(flags,true,sizeof(flags));//布尔值全变为true
+//注意，对于数值型，只能修改为0或-1！！！！
+```
+
+---
+
 
 
 ### <mark>cin&cout </mark>
@@ -893,6 +918,7 @@ string str = "123";
 int num1 = stoi(str);
 double num2 = stod(str);
 float num3 = stof(str);
+long long num4 = stoll(str);
 //数值-->字符串
 string str1 = to_string(num1);
 ```
