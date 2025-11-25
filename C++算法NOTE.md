@@ -247,7 +247,7 @@ cout<<n-max_len<<endl;//输出最少要抽出的人数
 
 eg：一个随机序列a。最大升序子序列的长度，就等于下面问题的答案哦----->
 
-将全部元素划分为若干个降序列，最少需要划分为多少个？？
+Q:将全部元素划分为若干个降序列，最少需要划分为多少个？？
 
 ---
 
@@ -854,6 +854,40 @@ memset(str,0,sizeof(str));//字符串全变为空!!!
 memset(str,'a',sizeof(str));//字符串全变为字符a
 memset(flags,true,sizeof(flags));//布尔值全变为true
 //注意，对于数值型，只能修改为0或-1！！！！
+```
+
+---
+
+### <mark>lower_bound/upper_bound函数</mark>
+
+使用前记得先将范围序列**排序**哦
+
+```c++
+sort(arr,arr+n);
+```
+
+这两个函数是基于`二分`的思想写的，可以直接调用
+
+用于**查找**序列中的值，区间依旧左闭右开哦
+
+`lower_bound(arr,arr+n,value);`返回第一个**大于等于**value元素的位置！
+
+`upper_bound(arr,arr+n,value);`返回第一个**大于**value元素的位置！
+
+若找不到，都会返回last这个位置（last是序列最后一个元素的再下一个位置）
+
+```c++
+int a[n];//初始化省略了哈
+sort(a,a+n);//记住一定要先排序
+auto left = lower_bound(a,a+n,1);//auto可以自动判断表达式的类型哦，此处即为指针类型了
+auto right = upper_bound(a,a+n,1);
+int cnt = right-left;//统计1在a中出现次数
+```
+
+```c++
+auto left = lower_bound(a,a+n,1);
+int index = left-a;//获取第一个元素1的具体索引(指针相减)
+int value = *left;//获取指针所指的值
 ```
 
 ---
