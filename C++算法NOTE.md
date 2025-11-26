@@ -181,6 +181,35 @@ cout<<max_sum;
 
 
 
+**拓展：环形最大子数组和**(最小值法)
+
+写成函数的形式（）嗯
+
+环形数组时，若最大子数组和是跨越首位的情况，用总和减去最小子数组和就是答案
+
+```c++
+int max_sub_sum_circular(int *nums,int nums_size){
+    if(nums==NULL || nums_size==0)return 0;
+    int maxsum = nums[0];
+    int max_endhere = nums[0];
+    int minsum = nums[0];
+    int min_endhere = nums[0];    
+    int total = nums[0];
+    for(int i = 1;i<nums_size;i++){
+        total += nums[i];
+        max_endhere = max(nums[i],max_endhere+nums[i]);
+        min_endhere = min(nums[i],min_endhere+nums[i]);
+        maxsum = max(maxsum,max_endhere);
+        minsum = min(minsum,min_endhere);
+    }
+    if(maxsum<0){
+        return maxsum;//必要的判断！防止数组全是负数时的bug
+        //全是负数时，总和-最小和=0，但是数组中子数组和此时不可能为0对吧！
+    }
+    return max(maxsum,total-minsum);
+}
+```
+
 ---
 
 ### <mark>LIS相关问题</mark>
