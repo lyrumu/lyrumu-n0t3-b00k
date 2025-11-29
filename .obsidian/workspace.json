@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "ff30b58ee02b9fa2",
@@ -143,7 +144,7 @@
               "type": "outline",
               "state": {
                 "file": "C++算法NOTE.md",
-                "followCursor": false,
+                "followCursor": true,
                 "showSearch": false,
                 "searchQuery": ""
               },
@@ -151,12 +152,12 @@
               "title": "C++算法NOTE 的大纲"
             }
           }
-        ]
+        ],
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -169,8 +170,9 @@
       "bases:创建新数据库": false
     }
   },
-  "active": "bc6ac2f2827404f2",
+  "active": "adddb30ed44e6f81",
   "lastOpenFiles": [
+    "快看是（：例题）.md",
     "C++算法NOTE.md",
     "未命名.md",
     "未命名",
@@ -179,7 +181,6 @@
     "2025-11-18.md",
     "README.md",
     "README.en.md",
-    "快看是（：例题）.md",
     "images/ced8316371f1749082576d431c9e8374.jpg",
     "images/屏幕截图 2025-11-05 212756.png"
   ]

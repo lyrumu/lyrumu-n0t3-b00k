@@ -292,7 +292,7 @@ A,B是两个字符串，有三种操作：
 
 `将A字符串变成B字符串所需的最小操作次数，就是A，B的编辑距离`
 
-基础代码实现：
+基础代码实现：（二维数组版，比较好理解）
 
 ```c++
 string a;string b;
@@ -318,10 +318,41 @@ for(int i = 1;i<=lena;i++){
 cout<<dp[lena][lenb]<<endl;
 ```
 
-进阶代码（优化）：
+进阶代码（优化）：（一维数组版）
+
+写成函数形式，暂时理解不了就当黑盒先使用吧，最多也只能处理几千字符的文本
 
 ```c++
-
+int EditDistance(string a,string b){
+    int lena = a.size();
+    int lenb = b.size();
+    if(a==b)return 0;
+    if(lena>lenb){//确保a是较短的字符，节省空间
+        swap(a,b);
+        swap(lena,lenb);
+    }
+//dp[j]表示在当前行中，将a的前i个字符转换为b的前j个字符的编辑距离
+    vector<int> dp(lenb+1);
+//初始化第0行，表示空字符串转换为b的前j个字符的编辑距离
+    for(int j = 0;j<=lenb;j++){
+        dp[j] = j;
+    }
+    for(int i = 1;i<=lena;i++){//表示a的前i个字符
+        //prev表示"上一行左边"，即dp[i-1][j-1]
+        int prev = dp[0];
+        dp[0] = i;//表示i个字符的a转换为0个字符的b的编辑距离
+        for(int j = 1;j<=lenb;j++){
+            int temp = dp[j];//保存i个字符的a转换为上一个j的distance，类比dp[i-1][j]
+            if(a[i-1]==b[j-1]){
+                dp[j] =  prev;
+            }else{
+                dp[j] = min(min(dp[j]+1,dp[j-1]+1),prev+1);//dp[j-1]就类比二维时dp[i][j-1]
+            }
+            prev = temp;
+        }
+    }
+    return dp[lenb];
+}
 ```
 
 ---
