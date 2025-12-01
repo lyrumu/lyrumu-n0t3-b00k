@@ -807,6 +807,33 @@ long long fastpower(long long base,long long exponent){
 }
 ```
 
+---
+
+### <mark> 埃式筛（素数）</mark>
+
+筛到一个素数，那它的倍数就全部都是合数
+
+筛到合数，直接continue跳过进行下一轮
+
+```c++
+const int n = 1000000;//测试数据范围
+bool st[n+1];//标记每个数，false为素数，true为合数
+vector<int> primes;//存储所有素数
+fill(st,st+n+1,false);//初始全为素数
+for(int i = 2;i<=n;i++){
+    if(st[i]){
+        continue;
+    }
+    primes.push_back(i);//不是合数就插入素数里了
+    if((long long)i*i>n)continue;//用ll防止溢出
+    for(long long j = (long long)i*i;j<=n;j += i){
+        st[j] = true;//该素数的倍数均为合数
+    }
+}
+```
+
+若追求极致高效，可以**只处理奇数**，因为偶数除了2都不是素数
+
 
 
 ---
