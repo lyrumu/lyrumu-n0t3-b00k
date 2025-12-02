@@ -6,7 +6,7 @@
 
 ---
 
-### <mark>qsort快排（c语言）</mark>
+### <mark>qsort快排(c语言)</mark>
 
 1.qsort函数原型
 
@@ -432,7 +432,7 @@ tail1最后的size就是所求序列的长度
 
 ---
 
-### <mark> 二维前缀和</mark>
+### <mark>二维前缀和</mark>
 
 1.定义二维前缀和
 
@@ -809,7 +809,7 @@ long long fastpower(long long base,long long exponent){
 
 ---
 
-### <mark> 埃式筛（素数）</mark>
+### <mark>埃式筛(素数)</mark>
 
 筛到一个素数，那它的倍数就全部都是合数
 
@@ -1131,7 +1131,7 @@ void func(const 变量类型 &变量名){}//能避免拷贝
 
 
 
-### <mark>sort函数（c++库）</mark>
+### <mark>sort函数(c++库)</mark>
 
 基本形式：
 

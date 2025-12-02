@@ -15,7 +15,8 @@
               "state": {
                 "file": "C++算法NOTE.md",
                 "mode": "source",
-                "source": false
+                "source": false,
+                "backlinks": false
               },
               "icon": "lucide-file",
               "title": "C++算法NOTE"
@@ -78,8 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 200
   },
   "right": {
     "id": "ff30b58ee02b9fa2",
@@ -157,7 +157,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 200
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -170,12 +170,13 @@
       "bases:创建新数据库": false
     }
   },
-  "active": "adddb30ed44e6f81",
+  "active": "1b012bfadc0ebcea",
   "lastOpenFiles": [
-    "快看是（：例题）.md",
+    "例题.md",
     "C++算法NOTE.md",
-    "未命名.md",
     "未命名",
+    "未命名 1.md",
+    "未命名.md",
     "未命名.base",
     "未命名.canvas",
     "2025-11-18.md",
