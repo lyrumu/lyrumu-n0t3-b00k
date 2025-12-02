@@ -453,7 +453,7 @@ for(int i = 1;i<=n;i++){
     }
 }
 //计算前缀和
-int presum[n+5][m+5];
+vector<vector<int>> presum(n+5,vector<int>(m+5,0));
 for(int i = 1;i<=n;i++){
     for(int j = 1;j<=m;j++){
         presum[i][j] = a[i][j]+presum[i-1][j]+presum[i][j-1]-presum[i-1][j-1];//*** 
