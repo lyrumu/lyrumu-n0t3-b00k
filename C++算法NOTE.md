@@ -378,7 +378,21 @@ while(left<=right){
 return -1;//没找到就返回-1
 ```
 
+一般来说，查找**整数**值时，可以用
 
+```c++
+while(left<=right){
+    //...
+}
+```
+
+但是对于**浮点数**来说，由于精度问题，一般用
+
+```c++
+for(int i = 0;i<100;i++){//不断迭代，控制精度
+    //...
+}
+```
 
 - 与导弹例题结合，直接上例题：（对每个导弹多次查询）
 
@@ -553,7 +567,9 @@ for(int i = 0;i<n-1;i++){//n个元素交换n-1次，这次寻找第i小的元素
             minindex = j;//找到的话改变minindex
         }
     }
-    swap(arr[i],arr[minindex]);//将第i小的元素放在相应位置
+    if(minindex!=i){//优化一下
+        swap(arr[i],arr[minindex]);//将第i小的元素放在相应位置
+    }
 }
 ```
 
@@ -601,14 +617,6 @@ for(int i = 1;i<n;i++){//从1开始，默认第一个是排序好的
 
 
 
-
-
-
-
-
-
-
-
 ---
 
 
@@ -642,7 +650,96 @@ chafen[l] = chafen[l]+c;
 chafen[r+1] = chafen[r+1]-c;
 ```
 
-注意，修改后要对差分数组求一次前缀和，进行还原，作为新的修改后的数组`a`
+注意，修改后要对差分数组求一次**前缀和**，进行还原，作为新的修改后的数组`a`
+
+---
+
+### <mark>"实时"差分</mark>
+
+传统差分VS实时差分:
+
+| 场景     | 传统差分   | "实时"差分       |
+| ------ | ------ | ------------ |
+| 需要全部结果 | ✅适合    | ❌浪费(只关心当前结果) |
+| 只需当前结果 | ❌多余    | ✅完美匹配        |
+| 需要中途判断 | ❌不方便   | ✅实时可用        |
+| 空间使用   | 需要结果数组 | 只需差分数组       |
+
+适用场景：
+
+需从左到右顺序处理；
+
+当前影响后续；
+
+区间修改；
+
+可能提前结束；
+
+
+
+**模板**:
+
+```c++
+vector<int> diff(n+2);//差分数组空间稍微开大一点
+int current = 0;//当前累计值(实时值)
+for(int i = 1;i<=n;i++){//遍历每个位置
+    current += diff[i];//current作为全局变量，此时就是当前位置的值！
+    //使用current作为当前位置的值，做相应判断和处理...
+    //...
+    diff[l] += val;
+    diff[r+1] -= val;//进行对应区间修改
+    if(对当前立即生效){
+        current += val;//由于diff只对将来位置的值产生影响，有时需要给current也+val
+    }
+}
+```
+
+eg:
+
+![实时差分例题](./images/屏幕截图%202025-12-05%20151447.png)
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+	int t;
+	cin>>t;
+	while(t--){
+		int n,k;
+		cin>>n>>k;
+		string s;
+		cin>>s;
+		vector<int> condition(n+1);
+		for(int i = 0;i<=n-1;i++){
+			condition[i+1] = s[i]-'0';
+		}
+		vector<int> cf(n+1,0);//差分数组
+		int flips = 0;//翻转次数
+		bool possible = true;
+		for(int i = 1;i<=n;i++){
+			flips += cf[i];//此刻flips就是当前灯的对应累计翻转次数
+			int current = condition[i]^(flips%2);//初次接触位运算哈
+			if(current==1){
+				if(i+k-1>n){//注意是i+k-1！！！
+					possible = false;
+					break;
+				}
+				cf[i]++;//进行区间修改
+				if(i+k<=n){
+					cf[i+k]--;
+				}
+				flips++;//当前结果立即生效
+			}
+		}
+		if(possible){
+			cout<<1<<endl;
+		}else{
+			cout<<0<<endl;
+		}
+	}
+	return 0;
+}
+```
 
 ---
 
@@ -650,7 +747,7 @@ chafen[r+1] = chafen[r+1]-c;
 
 ### <mark>二维数组差分</mark>
 
-以例题形式展示：
+以例题形式记录：
 
 ![二维数组差分例题](./images/屏幕截图%202025-11-09%20215629.png)
 
@@ -806,6 +903,81 @@ long long fastpower(long long base,long long exponent){
     return result;
 }
 ```
+
+---
+
+### <mark>DFS深度优先搜索</mark>
+
+(Depth-first search)
+
+**回溯算法**普通模板：
+
+```c++
+return_type dfs(参数){
+    //终止条件
+    if(达到终止条件){
+        处理结果;
+        return 对应结果;
+    }
+    //遍历所有选择
+    for(每个可能的选择){
+        //做出选择
+        标记状态改变；
+        //递归进入下一层
+        dfs(新的参数);
+        //回溯到之前的状态，来进行其他选择
+        恢复状态;
+    }
+    return 对应结果;
+}
+```
+
+eg：
+
+![走方格](./images/屏幕截图%202025-12-05%20140621.png)
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+const int dx[3] = {0,1,-1};
+const int dy[3] = {1,0,0};//每次可以向上，左，右走一步，此为对应坐标的增加值
+int dfs(int x,int y,int step,int n,vector<vector<int>>& visited,int offset){//step表示已经走过的步数，若达到n，dfs就结束了
+//visited前加"&"是因为要在函数内部改变实际的visited的值，要引用一下
+    if(step==n){
+        return 1;//走到头，记为1种方法
+    }
+    int total = 0;
+    for(int i = 0;i<3;i++){//每次都有三种选择，进行遍历
+        int nx = x+dx[i];
+        int ny = y+dy[i];//更新进行当前选择后的新坐标
+        if(nx<-n || nx>n || ny<0 || ny>n){
+            continue;//如果超出边界，跳过并进行下一个选择
+        }
+        if(visited[nx+offset][ny]){
+            continue;//如果新坐标是塌陷的，不能走，跳过并进行下一个选择
+        }
+        visited[nx+offset][ny] = true;//将能走到的新坐标标记为塌陷，下次不能走了
+        total += dfs(nx,ny,step+1,n,visited,offset);//以这个选择为基点，递归累加所有走法
+        visited[nx+offset][ny] = false;//回溯到基点前的状态，搜索其他选择是否可行
+    }
+    return total;
+}
+int main(){
+    int n;
+    cin>>n;
+    int offset = n;//偏移法
+    vector<vector<int>> visited(2*n+1,vector<int>(n+1,false));//由于有负数横坐标
+  //利用offset做一个偏移，即将0+offset视为原点，0视为最左边的点
+    visited[0+offset][0] = true;//起始点直接标记为已经走过的状态
+    int result = dfs(0,0,0,n,visited,offset);
+    cout<<result<<endl;
+    return 0;
+}
+```
+
+虽说方格无限大，但是能走的步数是有限的，那么最大方格其实也就确定为有限的了.
+
+
 
 ---
 
@@ -1056,7 +1228,7 @@ int num = str.back()-'0';//也能完成对最后一个元素的转换
 
 ---
 
-### <mark> 数学函数</mark>
+### <mark>数学函数</mark>
 
 | 数学函数                   | 库中对应函数语法       |
 |:----------------------:|:--------------:|
@@ -1256,6 +1428,7 @@ string str = "Hello World";
 int len = str.size();//len = 11
 cout<<str.find("World");//--->6
 str.push_back('!');//str = "Hello World!",用于添加单个字符
+str.pop_back();//删除最后一个字符
 str.append(" world");//功能更强大，可追加多字符
 str.append(100,'!');//添加100个感叹号哦
 
@@ -1330,33 +1503,9 @@ getline(cin,text);
 
 
 
-
-
-
-
-
-
-
-
 ---
 
 ### <mark>map容器(c++)</mark>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
