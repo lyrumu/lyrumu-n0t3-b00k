@@ -702,42 +702,42 @@ eg:
 #include<bits/stdc++.h>
 using namespace std;
 int main(){
-	int t;
-	cin>>t;
-	while(t--){
-		int n,k;
-		cin>>n>>k;
-		string s;
-		cin>>s;
-		vector<int> condition(n+1);
-		for(int i = 0;i<=n-1;i++){
-			condition[i+1] = s[i]-'0';
-		}
-		vector<int> cf(n+1,0);//差分数组
-		int flips = 0;//翻转次数
-		bool possible = true;
-		for(int i = 1;i<=n;i++){
-			flips += cf[i];//此刻flips就是当前灯的对应累计翻转次数
-			int current = condition[i]^(flips%2);//初次接触位运算哈
-			if(current==1){
-				if(i+k-1>n){//注意是i+k-1！！！
-					possible = false;
-					break;
-				}
-				cf[i]++;//进行区间修改
-				if(i+k<=n){
-					cf[i+k]--;
-				}
-				flips++;//当前结果立即生效
-			}
-		}
-		if(possible){
-			cout<<1<<endl;
-		}else{
-			cout<<0<<endl;
-		}
-	}
-	return 0;
+    int t;
+    cin>>t;
+    while(t--){
+        int n,k;
+        cin>>n>>k;
+        string s;
+        cin>>s;
+        vector<int> condition(n+1);
+        for(int i = 0;i<=n-1;i++){
+            condition[i+1] = s[i]-'0';
+        }
+        vector<int> cf(n+1,0);//差分数组
+        int flips = 0;//翻转次数
+        bool possible = true;
+        for(int i = 1;i<=n;i++){
+            flips += cf[i];//此刻flips就是当前灯的对应累计翻转次数
+            int current = condition[i]^(flips%2);//初次接触位运算哈
+            if(current==1){
+                if(i+k-1>n){//注意是i+k-1！！！
+                    possible = false;
+                    break;
+                }
+                cf[i]++;//进行区间修改
+                if(i+k<=n){
+                    cf[i+k]--;
+                }
+                flips++;//当前结果立即生效
+            }
+        }
+        if(possible){
+            cout<<1<<endl;
+        }else{
+            cout<<0<<endl;
+        }
+    }
+    return 0;
 }
 ```
 
@@ -1604,3 +1604,24 @@ vector<vector<int>> a(n,vector<int>(n,0));
 ```
 
 ---
+
+### <mark>栈溢出</mark>
+
+在oj或者算法竞赛上，数组在合适情况下就**开在全局**，或者使用`vector`;防止发生栈溢出(但实际开发中一般不推荐使用)
+
+```c++
+const int MAXN = 200005; 
+long long len[MAXN];//开在全局 
+int main(){
+    //... 
+    int n; 
+    cin>>n; 
+    vector<long long> len1(n);//或者使用vector 
+}   
+```
+
+
+
+---
+
+
