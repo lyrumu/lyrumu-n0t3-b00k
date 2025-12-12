@@ -118,7 +118,7 @@ for(int i = 1;i+len-1<=n-1;i++){//理解限制条件
 
 
 
-直接上题：
+eg：
 ![滑动窗口题目哦](images/屏幕截图%202025-11-01%20230151.png)
 解法：（只是为了~~拓展介绍~~此算法，实际仍是超时哦，还是需要用特殊的前缀和算法）
 
@@ -747,11 +747,56 @@ int main(){
 
 ### <mark>二维数组差分</mark>
 
-以例题形式记录：
+标准模板：
+
+```c++
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n,m,q;//n*m的数组，q次操作
+    cin>>n>>m>>q;
+    //原数组
+    vector<vector<long long>> a(n+5,vector<long long>(m+5));
+    for(int i = 1;i<=n;i++){
+        for(int j = 1;j<=m;j++){
+            cin>>a[i][j];//初始化原数组
+        }
+    }
+    //差分数组
+    vector<vector<long long>> di(n+5,vector<long long>(m+5,0));
+    for(int i = 1;i<=n;i++){
+        for(int j = 1;j<=m;j++){
+            di[i][j] = a[i][j]-a[i-1][j]-a[i][j-1]+a[i-1][j-1];//初始化差分数组
+        }
+    }
+    while(q--){//进行q次操作
+        int x1,y1,x2,y2;
+        long long k;
+        cin>>x1>>y1>>x2>>y2>>k;
+        di[x1][y1]+=k;
+        di[x2+1][y2+1]+=k;
+        di[x2+1][y1]-=k;
+        di[x1][y2+1]-=k;
+    }
+    vector<vector<long long>> re(n+5,vector<long long>(m+5,0));//求一次前缀和，还原差分数组
+    for(int i = 1;i<=n;i++){
+        for(int j = 1;j<=m;j++){
+            re[i][j] = di[i][j]+re[i-1][j]+re[i][j-1]-re[i-1][j-1];
+        }
+    }
+    for(int i = 1;i<=n;i++){
+        for(int j = 1;j<=m;j++){
+            cout<<re[i][j]<<" ";//输出操作后的新数组
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+```
+
+eg：
 
 ![二维数组差分例题](./images/屏幕截图%202025-11-09%20215629.png)
-
-解法：
 
 ```c++
 #include<bits/stdc++.h>
@@ -1623,5 +1668,3 @@ int main(){
 
 
 ---
-
-
