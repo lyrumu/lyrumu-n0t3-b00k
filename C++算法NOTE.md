@@ -840,60 +840,6 @@ int main(){
 
 
 
-### <mark>哈希表键值对</mark>
-
-一.语法：
-
-`unordered_map<键类型，值类型> 变量名;`
-
-eg:
-
-```c++
-//基本初始化
-unordered_map<int,string> student_id;// 学号→姓名
-unordered_map<string,double> product_price;//产品名→价格
-unordered_map<ll,ll> freq;// 数值→出现次数
-//插入键值对
-scores["Alice"] = 100;//Alice为键，100为其对应的值
-scores.insert({"Bob",60});//插入一个键值对
-//访问元素
-cout<<scores["Alice"];//输出的是100
-cout<<scores["David"];//自动创建{"David":0}并输出0
-```
-
-```c++
-//高级函数
-if(scores.count("Alice")){
-    //键存在
-}
-scores.erase("Alice");//删除键为Alice的元素
-```
-
-二.特性：
-
-1.无序性。
-
-相对map来说，map是有序的键值对，但访问速度没有哈希表快速。元素的存储顺序与插入顺序无关，遍历时顺序也不确定。
-
-2.自动初始化。
-
-eg：
-
-```c++
-unordered_map<int,int> m;
-cout<<m[5];//输出0,同时自动创建{5:0}
-```
-
-即，即使哈希表的一些键值对还没有被初始化时，此时若直接输出或者访问某个键，会自动创建键值对，并初始化键的值为0。
-
-三.用法：
-
-1.统计频率等
-
----
-
-
-
 ### <mark>两两乘积之和化简</mark>
 
 eg:一个数组a[n];计算数组中所有不同的两个元素的乘积之和（前后顺序相反的算同一组）
@@ -1550,9 +1496,93 @@ getline(cin,text);
 
 ---
 
-### <mark>map容器(c++)</mark>
+### <mark>map(c++)</mark>
 
+对插入的**键值对**自动**按键升序**排序
+```c++
+#include<map>
+map<键类型,值类型> 变量名;
+//添加键值对
+map<int,string> student;
+student[1] = "jaychou";
+student.insert({2,"neyo"});
+//查找访问
+//find():若查找发现有这个键，it就是指向该元素的迭代器
+//如果没找到,it会指向.end()
+auto it = student.find(键);
+if(it!=student.end()){
+	cout<<it->second;//输出对应值
+}
+//删除元素
+//erase()会将这整个键值对都删掉
+student.erase(键);
+```
+利用**迭代器遍历**map中的键值对:
+因为不一定知道键的起始值 也不一定知道键之间的间隔 也不知道末尾值
+```c++
+for(auto it = m.begin(),it!=m.end(),it++){
+	cout<<it->first<<" "<<it->second;
+}
+//这里it是迭代器 要用->来表示具体的键和值
+for(const auto& item:m){
+	cout<<item.first<<" "<<item.second;
+}
+//这里item是一个值，用.来表示具体的键和值
+```
+值要用.
+迭代器要用->
+ 
+---
 
+### <mark>unordered_map</mark>
+
+一.语法：
+
+`unordered_map<键类型，值类型> 变量名;`
+
+eg:
+
+```c++
+//基本初始化
+unordered_map<int,string> student_id;// 学号→姓名
+unordered_map<string,double> product_price;//产品名→价格
+unordered_map<ll,ll> freq;// 数值→出现次数
+//插入键值对
+scores["Alice"] = 100;//Alice为键，100为其对应的值
+scores.insert({"Bob",60});//插入一个键值对
+//访问元素
+cout<<scores["Alice"];//输出的是100
+cout<<scores["David"];//自动创建{"David":0}并输出0
+```
+
+```c++
+//函数
+if(scores.count("Alice")){
+    //键存在
+}
+scores.erase("Alice");//删除键为Alice的元素
+```
+
+二.特性：
+
+1.无序性。
+
+相对map来说，map是有序的键值对，但访问速度没有哈希表快速。元素的存储顺序与插入顺序无关，遍历时顺序也不确定。
+
+2.自动初始化。
+
+eg：
+
+```c++
+unordered_map<int,int> m;
+cout<<m[5];//输出0,同时自动创建{5:0}
+```
+
+即，即使哈希表的一些键值对还没有被初始化时，此时若直接输出或者访问某个键，会自动创建键值对，并初始化键的值为0。
+
+三.用法：
+
+1.统计频率等
 
 ---
 
@@ -1668,3 +1698,4 @@ int main(){
 
 
 ---
+
