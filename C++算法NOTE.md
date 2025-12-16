@@ -1499,6 +1499,7 @@ getline(cin,text);
 ### <mark>map(c++)</mark>
 
 对插入的**键值对**自动**按键升序**排序
+
 ```c++
 #include<map>
 map<键类型,值类型> 变量名;
@@ -1511,27 +1512,30 @@ student.insert({2,"neyo"});
 //如果没找到,it会指向.end()
 auto it = student.find(键);
 if(it!=student.end()){
-	cout<<it->second;//输出对应值
+    cout<<it->second;//输出对应值
 }
 //删除元素
 //erase()会将这整个键值对都删掉
 student.erase(键);
 ```
+
 利用**迭代器遍历**map中的键值对:
 因为不一定知道键的起始值 也不一定知道键之间的间隔 也不知道末尾值
+
 ```c++
 for(auto it = m.begin(),it!=m.end(),it++){
-	cout<<it->first<<" "<<it->second;
+    cout<<it->first<<" "<<it->second;
 }
 //这里it是迭代器 要用->来表示具体的键和值
 for(const auto& item:m){
-	cout<<item.first<<" "<<item.second;
+    cout<<item.first<<" "<<item.second;
 }
 //这里item是一个值，用.来表示具体的键和值
 ```
+
 值要用.
 迭代器要用->
- 
+
 ---
 
 ### <mark>unordered_map</mark>
@@ -1698,4 +1702,5 @@ int main(){
 
 
 ---
+
 
