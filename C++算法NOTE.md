@@ -1294,7 +1294,7 @@ void func(const 变量类型 &变量名){}//能避免拷贝
 
 
 
-### <mark>sort函数(c++库)</mark>
+### <mark>sort函数(c++)</mark>
 
 基本形式：
 
@@ -1317,9 +1317,25 @@ for(int i = 0;i<n;i++){
     cin>>a[i];//初始化一个数组，对数组中的元素进行排序
 }
 sort(a,a+n);//升序排列
+//如果是vector
+sort(a.begin(),a.end());
 //由于要一直排序到索引为n-1的元素，且左闭右开，因此写结束位置为(n-1)+1--->n！
 return a<b;//升序
 }
+```
+
+降序排序比较器`greater<>()`
+
+```c++
+#include<functional>
+sort(a,a+n,greater<数组值类型>());//这样就会降序排序
+```
+
+部分排序`nth_element`
+
+```c++
+nth_element(a,a+k,a+n);//升序，挑出a中前k小的元素
+nth_element(a,a+k,a+n,greater<>());//降序，挑出a中前k大的元素
 ```
 
 比较函数：(与c的qsort原理不同)
@@ -1702,5 +1718,3 @@ int main(){
 
 
 ---
-
-
