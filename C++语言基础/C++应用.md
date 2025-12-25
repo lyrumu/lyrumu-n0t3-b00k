@@ -66,9 +66,32 @@ using std::endl;
 
 
 
+## <mark>矩阵乘法优化</mark>
 
+```c++
+int n,m,s;
+cin>>n>>m>>s;//表示是n*m与m*s的矩阵相乘
+//原始数学算法
+for(int i = 0;i<n;i++){
+    for(int j = 0;j<s;j++){
+        for(int k = 0;k<m;k++){
+            c[i][j] += a[i][k]*b[k][j];
+        }
+    }
+}
+fill(c.begin(),c.end(),vector<int>(s,0));
+//下面是效率更高的算法，先当黑盒用
+for(int i = 0;i<n;i++){
+    for(int k = 0;k<m;k++){
+        for(int j = 0;j<s;j++){
+            c[i][j] += a[i][k]*b[k][j];    
+        }
+    }
+}
+//其实就是把基础版本的后两个for循环换了一下位置。
+```
 
-
+---
 
 
 
